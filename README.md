@@ -1,7 +1,5 @@
 # Grav Admin Addon Page Blocks Plugin
 
-![Config](./assets/intro.png)
-
 This plugin make it possible to define a list of allowed page types, when add child pages. 
 
 ## Usage
