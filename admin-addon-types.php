@@ -13,12 +13,26 @@ class AdminAddonTypesPlugin extends Plugin
     public static function getSubscribedEvents(): array
     {
         return [
-            'onAdminPageTypes' => ['onAdminPageTypes', 0]
+            'onPluginsInitialized' => [
+                ['onPluginsInitialized', 0]
+            ]
         ];
+    }
+
+    public function onPluginsInitialized()
+    {
+        if ($this->isAdmin()) {
+            $this->enable([
+                'onAdminPageTypes' => [
+                    ['onAdminPageTypes', 0]
+                ]
+            ]);
+        }
     }
 
     public function onAdminPageTypes(Event $event)
     {
+
         $types = $event['types'];
 
         $page = $this->getPage();
