@@ -8,7 +8,7 @@ Add an array of allowed page types in the page blueprint.
 
 ```yaml
 ...
-children-page-types:
+templates:
  - default
  - modular
  - form

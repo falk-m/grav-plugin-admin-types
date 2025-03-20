@@ -32,20 +32,24 @@ class AdminAddonTypesPlugin extends Plugin
 
     public function onAdminPageTypes(Event $event)
     {
+        $event['types'] = $this->filterAdminPageTypes($event['types']);
+    }
 
-        $types = $event['types'];
+    private function filterAdminPageTypes(array $types)
+    {
+        $page = $this->getCurrentAdminPage();
 
-        $page = $this->getPage();
         if (!$page) {
-            return;
+            return $types;
         }
 
         $blueprint = $page->getBlueprint();
 
-        $childrenTypes =  $blueprint->get('children-page-types');
+        $templatesSelector = $this->config->get('plugins.admin-addon-types.templates_selector');
+        $childrenTypes =  $blueprint->get($templatesSelector);
 
         if (!$childrenTypes) {
-            return;
+            return $types;
         }
 
         foreach ($types as $type => $typeLabel) {
@@ -55,10 +59,10 @@ class AdminAddonTypesPlugin extends Plugin
             }
         }
 
-        $event['types'] = $types;
+        return $types;
     }
 
-    public static function getPage()
+    public function getCurrentAdminPage()
     {
         $grav = Grav::instance();
 
